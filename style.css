@@ -1,0 +1,95 @@
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 500px;
+  margin: auto;
+  background: url(img/background.png) center/cover;
+  border-radius: 20px;
+}
+
+.game__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.game__button {
+  width: 60px;
+  height: 60px;
+  background-color: wheat;
+  border: 4px solid black;
+  font-size: 24px;
+  transition: transfrom 300ms ease-in;
+}
+
+.game__button:hover {
+  transform: scale(1.1);
+}
+
+.game__timer {
+  width: 100px;
+  background-color: white;
+  text-align: center;
+  border: 5px solid black;
+  border-radius: 50%;
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.game__score {
+  width: 50px;
+  height: 50px;
+  font-size: 46px;
+  background-color: darksalmon;
+  border-radius: 50px;
+  border: 3px solid black;
+  color: white;
+}
+
+.game__field {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background-color: blue;
+  opacity: 0.4;
+}
+
+.pop-up {
+  /* 팝업창이 display일때는 block으로 보이다가 hide때만 보이지 않도록  */
+  display: block;
+  width: 400px;
+  height: 140px;
+  padding: 20px;
+  background-color: #00000090;
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+  margin: auto;
+  transform: translateY(-150%);
+}
+
+/* 이 부분 공부! -> HTML의 pop-up으로 가서 class이름도 --hide로 변경 */
+.pop-up--hide {
+  display: none;
+}
+
+.pop-up__refresh {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  background-color: wheat;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.pop-up__message {
+  display: block;
+}
