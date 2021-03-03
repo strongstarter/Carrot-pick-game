@@ -11,19 +11,39 @@ const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
 
+const popUp = document.querySelector('.pop-up');
+const popUpRefresh = document.querySelector('.pop-up__refresh');
+const popUpText = document.querySelector('.pop-up__message');
+
+
 let started = false; //게임이 시작되었는지 안되었는지를 알고있는 아이(변수)하나와, 
 let score = 0;//최종적으로 점수를 기억하는 변수와,
 let timer = undefined;//총 얼만큼의 시간이 남았는지를 기억하고 있는 변수가 있어야겠죠? 
 //게임이 시작하지 않으면 timer가 undefined이다가, 게임이 시작되면 timer가 기억되고 있어야함.
 
+
+//아이템마다 리스너를 등록하는 것이 아니라, 이벤트 위임을 이용해서 필드 안에서 클릭이 발생하면,
+// 어떤 것이  클릭됐냐에 따라, 기능을 수행할 것이다. 
+
+field.addEventListener('click', onFieldClick); // (event) => onFieldClick(event)가 생략된 것임. 
+
+
 gameBtn.addEventListener('click', () => {
-    if(started) {
+    if(started) { //게임이 시작되면, stopGame 해준다. 
         stopGame();
     } else {
-        startGame();
+        startGame(); //게임이 종료되면 startGame해준다. 
     }
     started = !started;
 });
+
+popUpRefresh.addEventListener('click', () => {
+    initGame();
+    popUp.classList.add('pop-up--hide');
+    startGame();
+    showStopButton();
+    
+})
 
 function startGame(){
     initGame();
@@ -33,13 +53,19 @@ function startGame(){
 }
 
 function stopGame(){
-
+    stopGameTimer();
+    hideGameButton();
+    showPopUpWithText('REPLAY!');
 }
 
 function showStopButton() {
     const item = gameBtn.querySelector('.fas');
     item.classList.add('fa-stop');
     item.classList.remove('fa-play');
+}
+
+function hideGameButton() {
+    gameBtn.style.visibility = 'hidden';
 }
 
 function showTimerAndScore () {
@@ -50,7 +76,7 @@ function showTimerAndScore () {
 function startGameTimer() {
     let remainingTimeSec = GAME__DURATION_SEC;
     updateTimerText(remainingTimeSec); //시작하기전에 초기 시간 5초로 업데이트를 해줘야겠지 
-    timer = setInterval = (() => {
+    timer = setInterval(() => {
         if(remainingTimeSec <= 0){
             clearInterval(timer);
             return;
@@ -59,11 +85,22 @@ function startGameTimer() {
     }, 1000);    
 }
 
+function stopGameTimer() {
+    clearInterval(timer);
+}
+
 function updateTimerText(time) {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     gameTimer.innerText = `${minutes}:${seconds}`;
 }
+
+function showPopUpWithText(text) {
+    popUpText.innerText = text;
+    popUp.classList.remove('pop-up--hide');
+}
+
+
 
 function initGame() {
     // 게임이 시작할 때마다(reset될때마다)텅텅비게 만들어준다. 
@@ -73,6 +110,12 @@ function initGame() {
     //벌레와 당근을 생성한 뒤 field에 추가해줌
     addItem('carrot', CARROT_COUNT, 'img/carrot.png');
     addItem('bug', BUG_COUNT, 'img/bug.png');
+}
+
+function onFieldClick(event) {
+if(!started) { //만약 게임이 시작되지 않으면 
+    return; //함수를 빠르게 나간다. 
+}
 }
 
 function addItem(className, count, imgPath) {
@@ -96,5 +139,3 @@ function addItem(className, count, imgPath) {
 function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
-
-
