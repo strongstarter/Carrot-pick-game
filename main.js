@@ -10,6 +10,7 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
+const instruction = document.querySelector('.instruction');
 
 const popUp = document.querySelector('.pop-up');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
@@ -54,6 +55,7 @@ function startGame(){
     showTimerAndScore();
     startGameTimer();
     playSound(bgSound);
+    instruction.style.visibility = 'hidden';
 }
 
 function stopGame(){
@@ -135,6 +137,7 @@ function initGame() {
     //벌레와 당근을 생성한 뒤 field에 추가해줌
     addItem('carrot', CARROT_COUNT, 'img/carrot.png');
     addItem('bug', BUG_COUNT, 'img/bug.png');
+    instruction.style.visibility = 'visible';
 }
 
 function onFieldClick(event) {
